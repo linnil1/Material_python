@@ -3,7 +3,7 @@ import time
 import sys
 
 def print_rain () :
-    head,rainfall = get_rainfall_data()
+	head,rainfall = get_rainfall_data("http://hw01:8000/A136.htm")
 
     chinese = ["測站(測站代碼)","1小時"]
 

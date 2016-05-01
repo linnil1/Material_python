@@ -1,6 +1,6 @@
 from get_rainfall import get_rainfall_data
 
-head,rainfall = get_rainfall_data()
+head,rainfall = get_rainfall_data("http://hw01:8000/rainfall.htm")
 
 chinese = ["行政區","24小時"]
 

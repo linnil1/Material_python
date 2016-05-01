@@ -2,7 +2,7 @@ from get_rainfall import get_rainfall_data
 import time
 
 def print_rain () :
-    head,rainfall = get_rainfall_data()
+	head,rainfall = get_rainfall_data("http://hw01:8000/A136.htm")
 
     chinese = ["行政區","1小時"]
 
