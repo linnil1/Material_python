@@ -14,7 +14,7 @@ def special(start,end):
     WHERE mytime BETWEEN strftime('%s',"{0}") AND strftime('%s',"{1}") 
     AND freewayname != "freeway5"
     GROUP BY mysection
-    ORDER BY count(*) DESC 
+    ORDER BY freewayname,count(*) DESC 
     '''.format(start,end))
 
 def mycsv(name,start,end,func):
