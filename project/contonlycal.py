@@ -32,16 +32,16 @@ def mag(a):
 def dot(a,b):
     return ( a.x*b.x + a.y*b.y + a.z*b.z)
 
-def init(myK):
+def init(myK,name):
     global T,vrms,atoms
     T = myK
     vrms = (3*k*T/m)**0.5 # root mean square velocity at T
     atoms = []
+    data = list( csv.reader(open(name,"r")))
     for i in range(N):
         atom = particle()
-        atom.pos = vector(-L_size+2*L_size*random(),-L_size+2*L_size*random(),-L_size+2*L_size*random())
-        ra, rb = pi*random(), 2*pi*random()
-        atom.m, atom.v = m, vector(vrms*sin(ra)*cos(rb), vrms*sin(ra)*sin(rb), vrms*cos(ra))
+        atom.pos = vector(float(data[i*2][0]),float(data[i*2][1]),float(data[i*2][2]))
+        atom.m,atom.v = m,vector(float(data[i*2+1][0]),float(data[i*2+1][1]),float(data[i*2+1][2]))
         atoms.append(atom)
     
 def vcollision(a1,a2): # function to find the velocities of atoms after each collision
@@ -72,10 +72,11 @@ def mystr(a):
 
 myKmult=1
 for i in range(1,6):
+    name = "/tmp/pvnrt/data_{0}K_ball.csv".format(myKmult)
+    init(myKmult,name)
     name = "/tmp/pvnrt/data_{0}K.csv".format(myKmult)
-    init(myKmult)
-    writer = csv.writer(open(name, 'w'))
-    for count in range(30000):
+    writer = csv.writer(open(name, 'a'))
+    for count in range(70000):
         v=[]
         for i in range(N): #### calculate new positions for atoms
             v.append(round(mag(atoms[i].v),3))
@@ -85,8 +86,8 @@ for i in range(1,6):
     name = "/tmp/pvnrt/data_{0}K_ball.csv".format(myKmult)
     writer = csv.writer(open(name, 'w'))
     for i in range(N):
-            writer.writerow(mystr(atoms[i].pos))
-            writer.writerow(mystr(atoms[i].v))
+        writer.writerow(mystr(atoms[i].pos))
+        writer.writerow(mystr(atoms[i].v))
     myKmult *= 10
 #### and then you will calculate the momentum transferred to the walls and obtain the resulted pressure
 #### print the averaged pressure on the walls every 1000*dt
